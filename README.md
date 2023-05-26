@@ -4,6 +4,6 @@ For assignments in WEB-330
 # WEB 330 Enterprise JavaScript II
  
 ## Contributors
-* Richard Krasso
+* Professor Robert Kumar
 * Jocelyn Dupuis
 
