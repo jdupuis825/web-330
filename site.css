@@ -1,0 +1,59 @@
+/**
+    Title: site.css
+    Author: Jocelyn Dupuis
+    Date: 5/28/2023
+    Description: Assignments may be reusing these styles
+*/
+
+/** 
+Styling for app header
+*/
+.app-header {
+    text-align: center;
+    font-weight: 400;
+  }
+
+/** 
+Styling for return home element
+*/  
+.return-home {
+    color: #4F3674;
+    text-decoration: none;
+}
+
+/** 
+Styling for return home hover
+*/
+.return-home:hover {
+    background-color: #D6A800;
+    color: #4F3674
+}
+
+/** 
+Styling for return home visited
+*/
+.return-home:visited {
+    color: #3C275A
+}
+
+/** 
+Styling for form
+*/
+.form {
+    display: inline-grid;
+    grid-template-columns: auto;
+}
+
+/** 
+Styling for form field
+*/
+.form-field {
+    padding: 20px;
+}
+
+/** 
+Styling for full width
+*/
+.full-width {
+    width: 100%;
+}
