@@ -1,0 +1,36 @@
+/**
+    Title: dupuis-palindrome.css
+    Author: Jocelyn Dupuis
+    Date: 05/31/2023
+    Description: Styling for Palindrome App
+*/
+
+/*
+Imports theme.css for light and dark theme 
+*/
+@import url("../theme.css");
+
+/*
+Styling for H1
+*/
+h1 {
+    border: none;
+    background-color:var(--background-color);
+    color: var(--text-color);
+}
+
+/*
+Styling for card
+*/
+.card {
+    margin:auto;
+    text-align: center;
+    width: 100%;
+}
+
+/*
+Styling for results header
+*/
+#assign-results-header {
+    text-align: left;
+}
