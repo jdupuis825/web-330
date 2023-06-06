@@ -41,7 +41,7 @@ function isPalindrome(str) {
 
 // Onclick event to see if phrase is palindrome
 document.getElementById("btnCheckPhrase").onclick = function() {
-    let txtPhrase = document.getElementById('txtPhrase').value.toLowerCase(); // Variable declared for HTML test input 
+    let txtPhrase = document.getElementById('txtPhrase').value.toLowerCase(); // Variable declared for HTML input 
     let assignResultsHeader = document.getElementById('assign-results-header'); // Variable declared for results header
     let assignResults = document.getElementById('assign-results'); // Variable declared for assigned results
     let today = getTodaysDate(); // Variable declared for todays date
@@ -55,8 +55,8 @@ document.getElementById("btnCheckPhrase").onclick = function() {
 
     // If the palindrome is a palindrome & if not 
     if (isPalindrome(txtPhrase)) {
-        assignResults.innerHTML = txtPhrase + ` <b><u>is</u></b>` + " a palindrome!"; // Displays string phrase is true 
+        assignResults.innerHTML = txtPhrase + ` <b><u>is</u></b>` + " a palindrome!"; // Displays true string phrase
     } else {
-        assignResults.innerHTML = txtPhrase + ` <b><u>is not</u></b>` + " a palindrome!"; // Displays string phrase is false 
+        assignResults.innerHTML = txtPhrase + ` <b><u>is not</u></b>` + " a palindrome!"; // Displays false string phrase 
     }
 }
