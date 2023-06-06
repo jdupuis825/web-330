@@ -15,7 +15,7 @@ Styling for H1
 */
 h1 {
     border: none;
-    background-color:var(--background-color);
+    background-color: var(--background-color);
     color: var(--text-color);
 }
 
@@ -23,7 +23,7 @@ h1 {
 Styling for card
 */
 .card {
-    margin:auto;
+    margin: auto;
     text-align: center;
     width: 100%;
 }
