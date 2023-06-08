@@ -23,19 +23,19 @@ export class Bill {
     }
 
     // Function declared to add new appetizer option
-    addBeverage(appetizer) {
+    addAppetizer(appetizer) {
         // Pushes new appetizer option into appetizer array
         this._appetizers.push(appetizer);
     }
 
     // Function declared to add new main course option
-    addBeverage(mainCourse) {
+    addMainCourse(mainCourse) {
         // Pushes new main course option into main course array
         this._mainCourses.push(mainCourse);
     }
 
     // Function declared to add new dessert option
-    addBeverage(dessert) {
+    addDessert(dessert) {
         // Pushes new dessert option into dessert array
         this._desserts.push(dessert);
     }
