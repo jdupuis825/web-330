@@ -1,0 +1,58 @@
+/**
+    Title: dupuis-restaurant.css
+    Author: Jocelyn Dupuis
+    Date: 06/07/2023
+    Description: Styling for Restaurant App
+*/
+
+@import url("../theme.css");
+
+/*
+Styling for H1
+*/
+h1 {
+    border: none;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/*
+Styling for button 
+*/
+button {
+    width: 100%;
+}
+
+/*
+Styling for card
+*/
+.card {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+}
+
+/*
+Styling to fix main courses bottom 
+*/
+.main-course-card {
+    padding-bottom: 32px;
+}
+
+/*
+Styling for card content
+*/
+.card-content {
+    text-align: left;
+}
+
+/*
+Styling to set up grid for cards
+*/
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    padding-bottom: 15px;
+}
