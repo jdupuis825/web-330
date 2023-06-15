@@ -6,6 +6,61 @@
 */
 
 /**
+Styling for light theme
+*/
+body.light-theme {
+    --text-color: #000;
+    --background-color: #fff;
+    --anchor-color: #4f3674;
+    --h1-background-color: #3c275a;
+    --h1-border-color: #d6a800;
+    --heading-background-color: #3c275a;
+    --heading-color: #fff;
+    --heading-border-color: #d6a800;
+    --anchor-hover-color: #4f3674;
+    --anchor-hover-background-color: #d6a800;
+    --card-background-color: #fff;
+    --card-title-color: #4f3674;
+    --btn-background-color: #4f3674;
+    --btn-color: #fff;
+    --btn-hover-background-color: #d6a800;
+    --btn-hover-color: #4f3674;
+    --input-border-color: #ccc;
+    --table-header-background-color: #4F3674;
+    --table-header-color: #fff;
+    --table-border-color: #ddd;
+    --table-hover-background-color: #D6A800;
+    --table-hover-color: #4f3674;
+  }
+  
+  /* 
+  Styling for dark theme
+  */
+  body.dark-theme {
+    --text-color: #fafafa;
+    --background-color: #303030;
+    --anchor-color: #fff;
+    --h1-background-color: #9c27b0;
+    --h1-border-color: #9c27b0;
+    --heading-background-color: #424242;
+    --heading-color: #fff;
+    --heading-border-color: #424242;
+    --anchor-hover-color: #d176e1;
+    --anchor-hover-background-color: #303030;
+    --card-background-color: #424242;
+    --card-title-color: #d176e1;
+    --btn-background-color: #d176e1;
+    --btn-color: #fff;
+    --btn-hover-background-color: #7d4787;
+    --btn-hover-color: #fff;
+    --input-border-color: #303030;
+    --table-header-background-color: #D176E1;
+    --table-header-color: #fff;
+    --table-border-color: #303030;
+    --table-hover-background-color: #7D4787;
+    --table-hover-color: #fff;
+  }
+/**
 Styling for body
 */
 body {
@@ -132,7 +187,42 @@ Styling for dropdown menu
     border-radius: 4px;
     box-sizing: border-box;
 }
-  
 
+/**
+Styling for table
+*/
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+/**
+Styling for table headers
+*/
+.table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: var(--table-header-background-color);
+    color: var(--table-header-color);
+}  
+
+/**
+Styling for table data and headers
+*/
+.table td, th {
+    border: 1px solid var(--table-border-color);
+    padding: 8px;
+    text-align: left;
+}
+
+/**
+Styling for table hover
+*/
+.table-hover tr:hover {
+    background-color: var(--table-header-background-color);
+    color: var(--table-hover-color);
+}
 
 
