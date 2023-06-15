@@ -74,67 +74,72 @@
         <!--JS code for food items calorie search -->
         <script type="module">
 
-          // Imports CalorieConverter class
+          //Imports CalorieConverter class
           import { CalorieConverter } from "./calorie-converter.js";
-
-          // Variable created and assigned to food item input field
+    
+          // Variables created and assigned to food item input field 
           const txtFoodItemEl = document.getElementById("txtFoodItem");
+          const foodListResult = document.getElementById("foodList");
+          const assignResults = document.getElementById("assign-results");
+    
+          // Onclick event registered for search field button
+          document.getElementById("btnSearch").onclick = () => {
+    
+            // Variable created for food items
+            const txtFoodItem = txtFoodItemEl.value;
+            const foods = CalorieConverter.find(txtFoodItem.toLowerCase());
 
-          //Onclick event registered for button search field
-          document.getElementById("btnSearch").onclick = function() {
-            txtFoodItem = txtFoodItemEl.value;
-
-            // Variable declared for food item input 
-            let foods = CalorieConverter.find(txtFoodItem.toLowerCase());
-
+            // HTML table for rows
+            let tableRows = "";
+    
             // For food values 
             for (let food of foods) {
-              tableData += 
-              `<tr>
-                <td>` + food.name + `</td>
-                <td>` + food.calories + `</td>
-              </tr>`;
+              tableRows += 
+                `<tr>
+                  <td>` + food.name + `</td>
+                  <td>` + food.calories + `</td>
+                </tr>`;
             }
-
-            // Table created for food items and values
+    
+            // Tables created for food items and values 
             let tableData = `<table class="table-hover">
                               <tr>
                                 <th>Name:</th>
                                 <th>Calories:</th>
                               </tr>
-                            <tbody>`;
-          
-            // Rows created for table 
-            document.getElementById("search-results").innerHTML = tableData + `</tbody>
+                              <tbody>${tableRows}</tbody>
                             </table>`;
+    
+            // Results assigned from inner HTML
+            assignResults.innerHTML = tableData;
           }
-
-          // Onclick event created 
+    
+          // Created onclick event
           document.addEventListener('keyup', (event) => {
             if (event.key === "Enter") {
               document.getElementById('btnSearch').click();
             }
           });
-
-          // Variable created to call static field off CalorieConverter class
+    
+          // Variable created to call static field class
           const foodList = CalorieConverter.data;
-
+          
           // Variable created to build HTML string
           let foodListData = "<i>(Ex: ";
-          
-          // For adding items to the food list
+
+          // For adding items in the food list
           for (let food of foodList) {
             foodListData += food.name + ", ";
           }
 
-          // Slices additional comma 
+          // Slices additional comma
           foodListData = foodListData.slice(0, -2);
 
-          // Closes the ) i tag
-          foodListData += `)</i>`
+          // Closes the 0 and <i> tag
+          foodListData += ")</i>";
 
-          // Displays food list string
-          document.getElementById("foodList").innerHTML = foodListData;
+          //Displays food list string
+          foodListResult.innerHTML = foodListData;
         </script>
 
       </div>
