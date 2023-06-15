@@ -25,12 +25,11 @@ export class CalorieConverter extends FoodModel {
 
     // Function created to find food model objects
     static find(singleString) {
+        this.singleString = singleString;
 
-        // New array of data with food objects matching the parameter string
-        let searchResult = CalorieConverter.data.filter(food => food.toLowerCase() == singleString);
-
-        // Returns data results 
-        return searchResult;
-        
+    // Returns data results 
+    return this.data.filter((obj) => {
+        if(this.singleString.includes(`${obj.name}`.toLowerCase())) return obj;
+    }); 
     }
 }
