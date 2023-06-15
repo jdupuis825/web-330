@@ -1,0 +1,53 @@
+/**
+    Title: dupuis-calorie.css
+    Author: Jocelyn Dupuis
+    Date: 06/15/2023
+    Description: Styling for Calorie App
+*/
+
+/*
+Imports theme.css for light and dark theme 
+*/
+@import url("../theme.css");
+
+/*
+Styling for H1
+*/
+h1 {
+    border: none;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/*
+Styling for card
+*/
+.card {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+}
+
+/*
+Styling for results header
+*/
+#assign-results-header {
+    text-align: left;
+}
+
+/*
+Styling for button
+*/
+button {
+    width: 100%;
+}
+
+/*
+Styling for food list items
+*/
+#foodList {
+    float: right;
+    color: #df546a;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
