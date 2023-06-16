@@ -192,9 +192,10 @@ Styling for dropdown menu
 Styling for table
 */
 .table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border: 1px solid;
     width: 100%;
-    margin-bottom: 30px;
+    margin: auto;
     font-size: 18px;
 }
 
@@ -202,8 +203,6 @@ Styling for table
 Styling for table headers
 */
 .table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
     background-color: var(--table-header-background-color);
     color: var(--table-header-color);
 }  
@@ -212,17 +211,16 @@ Styling for table headers
 Styling for table data and headers
 */
 .table td, th {
-    border: 1px solid var(--table-border-color);
-    padding: 8px;
-    text-align: left;
+    border: var(--table-border-color);
 }
 
 /**
 Styling for table hover
 */
-.table-hover tr:hover {
+tr:hover {
     background-color: var(--table-header-background-color);
     color: var(--table-hover-color);
+    cursor: pointer;
 }
 
 
