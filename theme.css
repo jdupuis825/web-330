@@ -217,7 +217,7 @@ Styling for table data and headers
 /**
 Styling for table hover
 */
-table tr:hover {
+.table tr:hover {
     background-color: var(--table-header-background-color);
     color: var(--table-hover-color);
     cursor: pointer;
