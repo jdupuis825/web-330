@@ -210,7 +210,7 @@ Styling for table headers
 /**
 Styling for table data and headers
 */
-.table td, th {
+.table td, tr {
     border: var(--table-border-color);
 }
 
