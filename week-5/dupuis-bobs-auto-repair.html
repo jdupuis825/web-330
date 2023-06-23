@@ -64,18 +64,17 @@
         </div>
       </body>
       <!--Second cards container-->
-    <div class="assign-container">
+    < class="assign-container">
     <div class="assign-content">
       <!--Results header-->
       <div class="card">
         <div class="card-title">Shopping Cart</div>
-          <div class="card-content assign-results-text" id="serch-results">
+          <div class="card-content">
             <!--Results of auto repair items in shopping cart-->
             <div id="assign-results-header"></div>
-            <div class="assign-results-text" id="search-results"></div>
+            <div class="assign-results-text" id="shoppingCart"></div>
           </div>
       </div>
-    </div>
     </div>
 
       <script type="module">
@@ -110,7 +109,7 @@
         // Icon for shopping cart, users selected items, and variable created for results
         document.getElementById("cartIcon").onclick = () => {
             const cartProducts = shoppingCart.listProducts();
-            const cartResults = document.getElementById("search-results");
+            const cartResults = document.getElementById("shoppingCart");
             let tableRows = "";
             for(let product of cartProducts) {
                 tableRows += 
@@ -134,7 +133,7 @@
                 <tbody>${tableRows}</tbody>
             </table>`;
 
-            cartResults.innerHTML = cartDisplayTable;
+            document.getElementById("shoppingCart").innerHTML = cartDisplayTable;
         }
 
       </script>

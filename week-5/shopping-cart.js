@@ -24,8 +24,8 @@ export class ShoppingCart {
     }
 
     // Lists the auto products
-    * listProducts() {
-        for(let product of this.products) {
+    *[Symbol.iterator]() {
+        for (let product of this.products) {
             yield product;
         }
     }
