@@ -1,0 +1,144 @@
+<!--
+    Title: dupuis-bobs-auto-repair.html
+    Author: Jocelyn Dupuis
+    Date: 06/22/2023
+    Description: Interface for Bobs Auto Repair Shop App
+-->
+
+
+<!--To set the document type and language-->
+<!DOCTYPE html>
+<html lang="en">
+
+  <!--Gives page a title, links stylesheets and Google font kit to page-->
+  <head>
+    <!--Links: title, stylesheets, JavaScript, and Google Fonts-->
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link href="../theme.css" type="text/css"  rel="stylesheet">
+    <link href="../site.css" type="text/css"  rel="stylesheet">
+    <link href="dupuis-bobs-auto-repair.css" type="text/css"  rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="./cart-component.js"></script>
+  </head>
+  <body class="light-theme">
+
+    <!--Display light and dark theme-->
+    <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right"
+        style="font-size: 28px;"><span id="icon-text"></span></i><br>
+    <!--Container holds first card and app-header-->
+    
+    <!--<div class="assign-container">-->
+    <div class="assign-content">
+      <h1 class="app-header">Welcome to Bob's Automotive Repair Shop!</h1>
+        <!--Card with title-->
+        <div class="card">
+          <div class="card-title">Product Listing</div>
+          <cart-component></cart-component>
+          <div class="card-content">
+            <!--Form for selecting items-->
+            <div class="form">
+                <!--Text field for auto repair items-->
+                <div class="form-field">
+                  <label for="productList">Choose a product:</label>
+                  <select name="productList" class="drop-down-menu" id="productList">
+                    <option value="">--Select--</option>
+                    <option value="19.99">Oil Change</option>
+                    <option value="18.44">Filter Replacement</option>
+                    <option value="9.99">Wiper Fluid Refill</option>
+                  </select>
+                </div>
+                <i id="cart-message">To view your shopping cart click on the cart icon</i>
+                <!--Button to see shopping cart items-->
+                <div class="form-field">
+                  <button class="btn btn-primary" id="btnAddProduct">Add to Cart</button>
+                </div>
+            </div>
+          </div>
+        </div>
+           <!--Link returns users to landing page-->
+           <a href="../index.html">Return</a>
+        </div>
+      </body>
+      <!--Second cards container-->
+    <div class="assign-container">
+    <div class="assign-content">
+      <!--Results header-->
+      <div class="card">
+        <div class="card-title">Shopping Cart</div>
+          <div class="card-content">
+            <!--Results of auto repair items in shopping cart-->
+            <div id="assign-results-header"></div>
+            <div class="assign-results-text" id="search-results"></div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+      <script type="module">
+        // Imports product and shopping cart JS files
+        import {Product} from "./product.js";
+        import {ShoppingCart} from "./shopping-cart";
+
+        // Variable created for users shopping cart
+        const shoppingCart = new ShoppingCart();
+
+        // Function to get length of cart
+        function setCartCount() {
+            const cartCount = document.getElementById("cart-count");
+            cartCount.innerHTML = shoppingCart.count();
+        }
+
+        //
+        setCartCount();
+        // Onclick event 
+        document.getElementById("btnAddProduct").onclick = () => {
+            const productList = document.getElementById("productList");
+            const product = productList.options[productList.selectedIndex];
+
+            if(product.text != "--Select--") {
+                shoppingCart.add(new Product(product.text, product.value));
+                setCartCount();
+                alert(`${product.text} was added to your shopping cart!`);
+                productList.value = "select";
+            }
+        }
+
+        // Icon for shopping cart, users selected items, and variable created for results
+        document.getElementById("cartIcon").onclick = () => {
+            const cartProducts = shoppingCart.listProducts();
+            const cartResults = document.getElementById("search-results");
+            let tableRows = "";
+            for(let product of cartProducts) {
+                tableRows += 
+                `<tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.price}</td>
+                </tr>`;
+            }
+
+            // Display results
+            const cartDisplayTable =
+            `<table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                    <tr>
+                </thead>
+                <tbody>${tableRows}</tbody>
+            </table>`;
+
+            cartResults.innerHTML = cartDisplayTable;
+        }
+
+      </script>
+
+      <script src="../theme.js"></script>
+  </body>
+</html>

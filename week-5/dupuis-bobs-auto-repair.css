@@ -1,0 +1,44 @@
+/**
+    Title: dupuis-bobs-auto-repair.css
+    Author: Jocelyn Dupuis
+    Date: 06/22/2023
+    Description: Styling for Bobs Auto Repair Shop App
+*/
+
+/*
+Imports theme.css for light and dark theme 
+*/
+@import url("../theme.css");
+
+/**
+Styling for cart message
+*/
+#cart-message {
+    float: right;
+    color: #df546a;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/**
+Styling for hover
+*/
+i:hover {
+    cursor: pointer;
+}
+
+/** 
+Styling for card title
+*/
+.card-title {
+    text-align: center;
+}
+
+/**
+Styling for cart component
+*/
+cart-component {
+    color: var(card-title-color);
+    text-align: center;
+    font-size: 16px;
+}
