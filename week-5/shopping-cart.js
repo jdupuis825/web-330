@@ -23,9 +23,9 @@ export class ShoppingCart {
         this.products.push(product);
     }
 
-    // Lists the products
-    *[Symbol.iterator]() {
-        for (const product of this.products) {
+    // Lists the auto products
+    * listProducts() {
+        for (let product of this.products) {
             yield product;
         }
     }
