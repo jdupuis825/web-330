@@ -24,7 +24,7 @@
 
     <script src="./cart-component.js"></script>
   </head>
-  <body class="light-theme">
+  <div class="light-theme">
 
     <!--Display light and dark theme-->
     <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right"
@@ -71,7 +71,6 @@
         <div class="card-title">Shopping Cart</div>
           <div class="card-content">
             <!--Results of auto repair items in shopping cart-->
-            <div id="assign-results-header"></div>
             <div class="assign-results-text" id="shoppingCart"></div>
           </div>
       </div>
@@ -85,34 +84,40 @@
         // Variable created for users shopping cart
         const shoppingCart = new ShoppingCart();
 
-        // Function to get length of cart
-        function setCartCount() {
-            const cartCount = document.getElementById("cart-count");
-            cartCount.innerHTML = shoppingCart.count();
-        }
-
-        //
+        // Sets cart count
         setCartCount();
-        // Onclick event 
-        document.getElementById("btnAddProduct").onclick = () => {
+          
+        // Onclick event when user adds product
+        document.getElementById("btnAddProduct").onclick = function() {
+            
             const productList = document.getElementById("productList");
-            const product = productList.options[productList.selectedIndex];
+            const product = productList.options[productList.selectedIndex].text;
+            const productValue = productList.options[productList.selectedIndex].value;
 
-            if(product.text != "--Select--") {
-                shoppingCart.add(new Product(product.text, product.value));
+            
+            if(product != "--Select--") {
+                const userProduct = new Product(product, productValue);
+                shoppingCart.add(userProduct);
                 setCartCount();
-                alert(`${product.text} was added to your shopping cart!`);
-                productList.value = "select";
+
+                alert(userProduct.name + " was added to your shopping cart!");
+                document.getElementById("productList").options.selectedIndex = productList[0];
             }
         }
 
         // Icon for shopping cart, users selected items, and variable created for results
-        document.getElementById("cartIcon").onclick = () => {
-            const cartProducts = shoppingCart.listProducts();
-            const cartResults = document.getElementById("shoppingCart");
-            let tableRows = "";
-            for(let product of cartProducts) {
-                tableRows += 
+        document.getElementById("cartIcon").onclick = function {
+            const cartDisplayTable =
+            `<table class="table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                <tr>
+                <tbody>`;
+            
+            for(let product of shoppingCart) {
+                cartDisplayTable += 
                 `<tr>
                     <td>${product.id}</td>
                     <td>${product.name}</td>
@@ -121,21 +126,17 @@
             }
 
             // Display results
-            const cartDisplayTable =
-            `<table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                    <tr>
-                </thead>
-                <tbody>${tableRows}</tbody>
+            cartDisplayTable +=
+                `</tbody>
             </table>`;
 
             document.getElementById("shoppingCart").innerHTML = cartDisplayTable;
         }
 
+        function setCartCount() {
+            document.getElementById("cart-count").innerHTML = shoppingCart.count;
+        }
+            
       </script>
 
       <script src="../theme.js"></script>
