@@ -24,7 +24,7 @@
 
     <script src="./cart-component.js"></script>
   </head>
-  <div class="light-theme">
+  <body class="light-theme">
 
     <!--Display light and dark theme-->
     <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right"
@@ -62,6 +62,7 @@
            <!--Link returns users to landing page-->
            <a href="../index.html">Return</a>
         </div>
+      </body>
       <!--Second cards container-->
     <div class="assign-container">
     <div class="assign-content">
@@ -70,75 +71,66 @@
         <div class="card-title">Shopping Cart</div>
           <div class="card-content">
             <!--Results of auto repair items in shopping cart-->
+            <div id="assign-results-header"></div>
             <div class="assign-results-text" id="shoppingCart"></div>
           </div>
       </div>
     </div>
 
-      <script type="module">
-        // Imports product and shopping cart JS files
-        import {Product} from "./product.js";
-        import {ShoppingCart} from "./shopping-cart";
+    <script type="module">
 
-        // Variable created for users shopping cart
-        const shoppingCart = new ShoppingCart();
+      // Imports product and shopping cart JS files
+      import { Product } from './product.js';
+      import { ShoppingCart } from './shopping-cart.js';
 
-        // Sets cart count
-        setCartCount();
+      // Variable created for users shopping cart
+      const shoppingCart = new ShoppingCart();
+
+      // Sets cart count
+      setCartCount;
+
+      // Build function to add selection
+      document.getElementById("btnAddProduct").onclick = function() {
           
-        // Onclick event when user adds product
-        document.getElementById("btnAddProduct").onclick = function() {
-            
-            const productList = document.getElementById("productList");
-            const product = productList.options[productList.selectedIndex].text;
-            const productValue = productList.options[productList.selectedIndex].value;
+          const productList = document.getElementById("productList");
+          const product = productList.options[productList.selectedIndex].text;
+          const productValue = productList.options[productList.selectedIndex].value;
 
-            
-            if(product != "--Select--") {
-                const userProduct = new Product(product, productValue);
-                shoppingCart.add(userProduct);
-                setCartCount();
+          if (product !== "--Select--") {
+              shoppingCart.add(new Product(product, parseFloat(productValue)));
+              setCartCount();
+              alert(`${product} was added to your shopping cart!`);
+          }
+      };
 
-                alert(userProduct.name + " was added to your shopping cart!");
-                document.getElementById("productList").options.selectedIndex = productList[0];
-            }
-        }
+      // Onclick event when user adds product and shopping cart icon
+      document.getElementById('cartIcon').onclick = function() {
+          let cartDisplayTable = '<table>';
+          cartDisplayTable += '<tr><th>ID</th><th>Name</th><th>Price</th></tr>';
 
-        // Icon for shopping cart, users selected items, and variable created for results
-        document.getElementById("cartIcon").onclick = function () {
-            const cartDisplayTable =
-            `<table class="table-hover">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                <tr>
-                <tbody>`;
-            
-            for(let product of shoppingCart) {
-                cartDisplayTable += 
-                `<tr>
-                    <td>${product.id}</td>
-                    <td>${product.name}</td>
-                    <td>${product.price}</td>
-                </tr>`;
-            }
+          for (const product of shoppingCart) {
+              cartDisplayTable += '<tr>';
+              cartDisplayTable += `<td>${product.name}</td>`;
+              cartDisplayTable += `<td>${product.price}</td>`;
+              cartDisplayTable += '</tr>';
+          }
 
-            // Display results
-            cartDisplayTable +=
-                `</tbody>
-            </table>`;
+          cartDisplayTable += '</table>';
 
-            document.getElementById("shoppingCart").innerHTML = cartDisplayTable;
-        }
+          const shoppingCartDiv = document.getElementById('shoppingCart');
+          shoppingCartDiv.innerHTML = cartDisplayTable;
+      };
 
-        function setCartCount() {
-            document.getElementById("cart-count").innerHTML = shoppingCart.count;
-        }
-            
-      </script>
+      // Build function for setCartCount
+      function setCartCount() {
+          const cartCountDiv = document.getElementById('cart-count');
+          const count = shoppingCart.count();
+          cartCountDiv.innerHTML = count;
+      }
 
-      <script src="../theme.js"></script>
-  </div>
-  </div>
+    </script>
+
+
+    <script src="../theme.js"></script>
+  </body>
 </html>
