@@ -1,0 +1,50 @@
+/**
+    Title: dupuis-future-value.css
+    Author: Jocelyn Dupuis
+    Date: 07/01/2023
+    Description: Styling for Future Value App
+*/
+
+/*
+Imports theme.css for light and dark theme 
+*/
+@import url("../theme.css");
+
+/** 
+Styling for danger text
+*/
+.danger {
+    color: #df546a;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/** 
+Styling for form label 
+*/
+.form-label {
+    display: inline-block;
+    padding-top: 1rem;
+}
+
+/**
+Set form width
+*/
+.form {
+    width: 65%;
+}
+
+/** 
+Styling for instructions on how to enter rate
+*/
+.how {
+    width: 90%;
+    text-align: center;
+}
+
+/**
+Styling for card title 
+*/
+.card-title {
+    text-align: center;
+}

@@ -1,0 +1,200 @@
+<!--
+    Title: dupuis-future-value.html
+    Author: Jocelyn Dupuis
+    Date: 07/01/2023
+    Description: Interface for Future Value App
+-->
+
+
+<!--To set the document type and language-->
+<!DOCTYPE html>
+<html lang="en">
+
+  <!--Gives page a title, links stylesheets and Google font kit to page-->
+  <head>
+    <!--Links: title, stylesheets, JavaScript, and Google Fonts-->
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link href="../theme.css" type="text/css"  rel="stylesheet">
+    <link href="../site.css" type="text/css"  rel="stylesheet">
+    <link href="dupuis-future-value.css" type="text/css"  rel="stylesheet">
+    <link href="../flex-layout.css" type="text/css"  rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="../theme.js"></script>
+  </head>
+  <body class="light-theme">
+
+    <!--Display light and dark theme-->
+    <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right"
+        style="font-size: 28px;"><span id="icon-text"></span></i><br>
+    <!--Container holds first card and app-header-->
+    
+    <!--<div class="assign-container">-->
+    <div class="assign-content">
+      <h1 class="app-header">Welcome to the Future Value App!</h1>
+        <!--Card with title-->
+        <div class="card">
+          <div class="card-title">Future Value Calculator</div>
+          <!--To display error logs-->
+          <div class="danger" id="errorLog"></div>
+
+          <div class="card-content">
+            <!--Form for selecting items-->
+            <div class="form">
+                <!--Text field for auto repair items-->
+                <div class="form-field row">
+                  <label for="txtMonthlyPayment" class="col-5 form-label">Monthly Payment:</label>
+                  <input type="text" id="txtMonthlyPayment" class="input col-7">
+                </div>
+
+                <div class="form-field row">
+                    <label for="txtYearlyRate" class="col-5 form-label">Interest Rate:</label>
+                    <input type="text" id="txtYearlyRate" class="input col-7">
+                </div>
+        
+                <div class="how">
+                    <i class="danger">Enter 11% as 11.1:</i>
+                </div>
+
+                <div class="form-field row">
+                    <label for="listNumOfYears" class="col-5 form-label">Number of Years:</label>
+                        <select id="listNumOfYears" name="listNumOfYears" class="drop-down-menu col-3">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                </div>
+                <!--Button to see shopping cart items-->
+                <div class="form-field">
+                  <button class="btn btn-primary" id="btnCalculate">Calculate</button>
+                </div>
+            </div>
+          </div>
+        </div>
+          
+        <!--Link returns users to landing page-->
+        <a href="../index.html">Return</a>
+
+      <!--Second cards container-->
+    <div class="assign-container">
+    <div class="assign-content">
+      <!--Results header-->
+      <div class="card">
+        <div class="card-title">Calculation as of <span id="today"></span></div>
+          <div class="card-content futureValue">
+            <!--Results of auto repair items in shopping cart-->
+            <div class="assign-results-text" id="futureValue"></div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+    <script type="module">
+
+        // Imports finance calculations and validator 
+        import { FinanceCalculator } from './finance-calculator.js';
+        import { Validator } from './validator.js';
+
+         // Sets the current date 
+         document.getElementById("today").innerHTML = new Date().toLocaleDateString("en-US");
+
+        // Onclick function declared to calculate future values 
+        document.getElementById("btnCalculate").onclick = function() {
+
+        // Variable declared for monthly payment 
+        const monthlyPayment = document.getElementById("txtMonthlyPayment").value;
+
+        // Variable declared for yearly rate 
+        const rate = document.getElementById("txtYearlyRate").value;
+        
+        // Variable declared for number of years 
+        const years = document.getElementById("listNumOfYears").value;
+        
+        // Variable declared for error log 
+        const errorLogEl = document.getElementById("errorLog");
+
+        // Variable declared for monthly payment validator 
+        const monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment);
+
+        // Monthly payment validator 
+        monthlyPaymentValidator.addRequiredField();
+        monthlyPaymentValidator.addRequiredFloatField();
+        monthlyPaymentValidator.addFloatMinField(100);
+
+        // Rate validator declared
+        const rateValidator = new Validator("Interest Rate", rate);
+        // Required fields added
+        rateValidator.addRequiredField();
+        rateValidator.addRequiredFloatField();
+        rateValidator.addFloatMaxField(100);
+
+        // Creates error log
+        const errorLog = [];
+
+        // Monthly payment validator does NOT validate
+        if (!monthlyPaymentValidator.validate()) {
+            // Message in validator 
+            for (let message of monthlyPaymentValidator.messages) {
+                // Push a message to error log 
+                 errorLog.push(message);
+            }
+        }
+
+        // If rate is NOT valid pushes message to error log
+        if (!rateValidator.validate()) {
+            // Message in validator
+            for (let message of rateValidator.messages) {
+                //Push a message onto the error log array
+                errorLog.push(message);
+            }
+        }
+
+        // Validators are valid
+        if (monthlyPaymentValidator.validate() && rateValidator.validate()) {
+            // Error log to a blank string
+            errorLogEl.innerHTML = "";
+
+            // Calculates future value
+            const futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
+
+            // Formats results with commas
+            const obj1 = new Intl.NumberFormat('en-US');
+            const output = obj1.format(futureValue);
+
+            // Displays future value
+            document.getElementById("futureValue").innerHTML = "The future value is $" + output;
+        } else {
+            // Error log to a blank string
+            errorLogEl.innerHTML = "";
+        
+            // Variable declared for error message 
+            let errorLogMessage = `<ul>`;
+
+            // All error in error log
+            for (let error of errorLog) {
+                errorLogMessage += `<li>${error}</li>`;
+            }
+
+            errorLogMessage += `</ul>`
+
+            // Displays messages from error log
+            document.getElementById("errorLog").innerHTML = errorLogMessage;
+            }
+        }
+    
+
+    </script>
+
+  </body>
+</html>
