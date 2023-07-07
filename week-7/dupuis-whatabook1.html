@@ -57,43 +57,6 @@
 
     <script type="module">
 
-        // Function declared for book info
-        function anchorClicked(e) {
-
-            e.preventDefault();
-
-            let self = this;
-            let cell = self.parentElement;
-            let row = cell.parentElement;
-            let data = row.querySelectorAll("td");
-
-            let bookData = `<ul style="list-style-type: none">`;
-
-            // Each field of data info
-            for (let field of data) {
-
-                bookData += `<li><b>${field.dataset.value}</b>${field.innerText}</li>`;
-            }
-
-            bookData += `</ul>`;
-
-            // Displays info to user
-            document.getElementById("selectedBook").innerHTML = bookData;
-        }
-
-        // Function declared for isbn click events
-        function addIsbnClickEvents() {
-
-            // Variable declared for table body
-            let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
-
-            // Items in viewButtons:
-            for(let x = 0; x < viewButtons.length; x++) {
-            // Onclick created for isbn button
-            viewButtons[x].addEventListener("click", anchorClicked);
-            }
-        }
-
         // Event listener registered for DOM content
         addEventListener("DOMContentLoaded", (event) => {
 
@@ -116,26 +79,27 @@
             })
         });
 
-           // Function created for loading book info into table
-           function loadBooks(xml) {
+        // Function created for loading book info into table
+        function loadBooks(xml) {
 
-            // Variable created for book info
-            let books = xml.getElementsByTagName("book");
+        // Variable created for book info
+        let books = xml.getElementsByTagName("book");
 
-            // Variable created for table heading
-            let tableData = `<table id="bookTable" class="table">
-                               <tr>
-                                  <th>ISBN</th>
-                                  <th>Title</th>
-                                  <th>Description</th>
-                                  <th>Pages</th>
-                                  <th>Authors</th>
-                                </tr>
-                                <tbody>`;
+        // Variable created for table heading
+        tableData += `
+            <table id="bookTable" class="table">
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Pages</th>
+                    <th>Authors</th>
+                </tr>
+            `;
 
             // To iterate over the books variable and append each XML object to bookTable variable
             for (let book of books) {
-                
+    
                 let isbn = book.getElementsByTagName("isbn")[0].childNodes[0].nodeValue;
                 let title = book.getElementsByTagName("title")[0].childNodes[0].nodeValue;
                 let description = book.getElementsByTagName("description")[0].childNodes[0].nodeValue;
@@ -143,22 +107,62 @@
                 let author = book.getElementsByTagName("authors")[0].childNodes[0].nodeValue;
 
                 // Data/info values to table
-                tableData += `<tr>
-                                <td data-value="ISBN: "><a href="#" class="isbn-link">${isbn}</a></td>
-                                <td data-value="Title: ">${title}</td>
-                                <td data-value="Description: ">${description}</td>
-                                <td data-value="Pages: ">${pages}</td>
-                                <td data-value="Authors: ">${authors}</td>
-                              </tr>`;
+                tableData += `
+                  <tr>
+                    <td data-value="ISBN: "><a href="#" class="isbn-link">${isbn}</a></td>
+                    <td data-value="Title: ">${title}</td>
+                    <td data-value="Description: ">${description}</td>
+                    <td data-value="Pages: ">${pages}</td>
+                    <td data-value="Authors: ">${author}</td>
+                  </tr>`;
             }
 
             // Closes table body and the entire table
-            tableData += `</tbody>
-                       </table>`;
+            tableData += `
+                </tbody>
+              </table>
+            `;
 
             // Display the table to the HTML document
             document.getElementById("bookList").innerHTML = tableData;   
             }
+
+        // Function declared for book info
+        function anchorClicked(e) {
+            // Prevents default
+            e.preventDefault();
+
+            let self = this;
+            let cell = self.parentElement;
+            let row = cell.parentElement;
+            let data = row.querySelectorAll("td");
+
+            let bookData = `<ul style="list-style-type: none">`;
+
+            // Each field of data info
+            for (let field of data) {
+                // List to table string
+                bookData += `<li><b>${field.dataset.value}</b>${field.innerText}</li>`;
+            }
+
+            bookData += `</ul>`;
+
+            // Displays info to user
+            document.getElementById("selectedBook").innerHTML = bookData;
+        }
+
+        // Function declared for isbn click events
+        function addIsbnClickEvents() {
+
+            // Variable declared for table body
+            let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
+
+            // Items in viewButtons:
+            for (let x = 0; x < viewButtons.length; x++) {
+            // Onclick created for isbn button
+            viewButtons[x].addEventListener("click", anchorClicked);
+            }
+        }
 
     </script>
     </div>
