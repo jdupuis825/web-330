@@ -14,8 +14,8 @@
   <head>
     <!--Links: title, stylesheets, JavaScript, and Google Fonts-->
     <title>WEB 330 – Enterprise JavaScript II</title>
-    <link href="../theme.css" type="text/css"  rel="stylesheet">
     <link href="../site.css" type="text/css"  rel="stylesheet">
+    <link href="../theme.css" type="text/css"  rel="stylesheet">
     <link href="dupuis-whatabook1.css" type="text/css"  rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,8 +35,7 @@
         <!--Card with title-->
         <div class="card">
           <div class="card-title">Book Listing</div>
-          <div class="card-content" id="bookList">
-          </div>
+          <div class="card-content" id="bookList"></div>
         </div>
          <!--Link returns users to landing page-->
          <a href="../index.html">Return</a>
@@ -49,8 +48,7 @@
         <!--Card and results header-->
         <div class="card">
           <div class="card-title">Selected Book</div>
-            <div class="card-content" id="selectedBook">
-            </div>
+            <div class="card-content" id="selectedBook"></div>
         </div>
       </div>
     </div>
@@ -82,20 +80,21 @@
         // Function created for loading book info into table
         function loadBooks(xml) {
 
-        // Variable created for book info
-        let books = xml.getElementsByTagName("book");
+                // Variable created for book info
+                let books = xml.getElementsByTagName("book");
 
-        // Variable created for table heading
-        tableData += `
-            <table id="bookTable" class="table">
-                <tr>
-                    <th>ISBN</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Pages</th>
-                    <th>Authors</th>
-                </tr>
-            `;
+                // Variable created for table heading
+                tableData += `
+                    <table class="table" id="bookTable">
+                        <tr>
+                            <th>ISBN</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Pages</th>
+                            <th>Authors</th>
+                        </tr>
+                    </tbody>
+                `;
 
             // To iterate over the books variable and append each XML object to bookTable variable
             for (let book of books) {
@@ -114,7 +113,8 @@
                     <td data-value="Description: ">${description}</td>
                     <td data-value="Pages: ">${pages}</td>
                     <td data-value="Authors: ">${author}</td>
-                  </tr>`;
+                  </tr>
+                `;
             }
 
             // Closes table body and the entire table
