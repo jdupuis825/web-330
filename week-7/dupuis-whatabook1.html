@@ -57,8 +57,45 @@
 
     <script type="module">
 
-           // Event listener registered for DOM content
-           addEventListener("DOMContentLoaded", (event) => {
+        // Function declared for book info
+        function anchorClicked(e) {
+
+            e.preventDefault();
+
+            let self = this;
+            let cell = self.parentElement;
+            let row = cell.parentElement;
+            let data = row.querySelectorAll("td");
+
+            let bookData = `<ul style="list-style-type: none">`;
+
+            // Each field of data info
+            for (let field of data) {
+
+                bookData += `<li><b>${field.dataset.value}</b>${field.innerText}</li>`;
+            }
+
+            bookData += `</ul>`;
+
+            // Displays info to user
+            document.getElementById("selectedBook").innerHTML = bookData;
+        }
+
+        // Function declared for isbn click events
+        function addIsbnClickEvents() {
+
+            // Variable declared for table body
+            let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
+
+            // Items in viewButtons:
+            for(let x = 0; x < viewButtons.length; x++) {
+            // Onclick created for isbn button
+            viewButtons[x].addEventListener("click", anchorClicked);
+            }
+        }
+
+        // Event listener registered for DOM content
+        addEventListener("DOMContentLoaded", (event) => {
 
             // Variable declared for books.xml
             let fileName = "books.xml";
@@ -77,7 +114,7 @@
                 // Click event for isbn 
                 addIsbnClickEvents();
             })
-           });
+        });
 
            // Function created for loading book info into table
            function loadBooks(xml) {
@@ -120,48 +157,9 @@
                        </table>`;
 
             // Display the table to the HTML document
-            document.getElementById("bookList").innerHTML = tableData;
-
-
-            // Function declared for book info
-            function anchorClicked(e) {
-
-                e.preventDefault();
-
-                let self = this;
-                let cell = self.parentElement;
-                let row = cell.parentElement;
-                let data = row.querySelectorAll("td");
-
-                let bookData = `<ul style="list-style-type: none">`;
-
-                // Each field of data info
-                for (let field of data) {
-        
-                    bookData += `<li><b>${field.dataset.value}</b>${field.innerText}</li>`;
-                }
-
-                    bookData += `</ul>`;
-
-                //Displays info to user
-                document.getElementById("selectedBook").innerHTML = bookData;
+            document.getElementById("bookList").innerHTML = tableData;   
             }
-           
-           // Function declared for isbn click events
-           function addIsbnClickEvents() {
-            
-              // Variable declared for table body
-              let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
-
-              // Items in viewButtons:
-              for(let x = 0; x < viewButtons.length; x++) {
-                // Onclick created for isbn button
-                viewButtons[x].addEventListener("click", anchorClicked);
-              }
-            }
-        }
 
     </script>
     </div>
-  </div>
 </html>
