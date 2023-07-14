@@ -220,7 +220,7 @@ Styling for table headers
 /**
 Styling for table data and headers
 */
-.table td, table th {
+.table td, tr {
     border: 1px solid var(--table-border-color);
     padding: 8px;
     text-align: left;
@@ -229,7 +229,7 @@ Styling for table data and headers
 /**
 Styling for table hover
 */
-.table-hover tr:hover {
+.table tr:hover {
     background-color: var(--table-hover-background-color);
     color: var(--table-hover-color);
     cursor: pointer;
