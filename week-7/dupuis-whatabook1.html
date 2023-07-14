@@ -23,7 +23,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="../theme.js"></script>
   </head>
-<div>
+  <body>
+    
   <div class="light-theme">
     <!--Display light and dark theme-->
     <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right"
@@ -53,155 +54,155 @@
       </div>
     </div>
 
+
     <script type="module">
+        // Function declared for book info
+        function anchorClicked(e) {
+             // Prevents default
+             e.preventDefault();
 
-        // Event listener registered for DOM content
-        addEventListener("DOMContentLoaded", (event) => {
+             let self = this;
+             let cell = self.parentElement;
+             let row = cell.parentElement;
+             let data = row.querySelectorAll("td");
 
-            // Variable declared for books.xml
-            let fileName = "books.xml";
+             let bookData = `<ul style="list-style-type: none">`;
 
-            // Fetch to pass-in fileName variable
-            fetch(fileName)
-            .then(res => res.text())
-            .then(data => {
-                // domParser variable created
-                let domParser = new DOMParser();
+             // Each field of data info
+             for(let field of data) {
+                 // List to table string
+                 bookData += `<li><b>${field.dataset.value}</b>${field.innerText}</li>`;
+             }
 
-                // xmlBooks variable created to parse info from xml books
-                let xmlBooks = domParser.parseFromString(data, "text/xml");
-                loadBooks(xmlBooks);
+             // Closes ul
+             bookData += `</ul>`;
 
-                // Click event for isbn 
-                addIsbnClickEvents();
-            })
-        });
+             // Displays info to user
+             document.getElementById("selectedBook").innerHTML = bookData;
+         }
+        
+        //Declare a function to add isbn click events
+        function addIsbnClickEvents() {
+            
+            //Declare a variable to select the table body
+            let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
 
-        // Function created for loading book info into table
-        function loadBooks(xml) {
+            //For each item in viewButtons:
+            for(let x = 0; x < viewButtons.length; x++) {
+              //Create an onclick event listening to each isbn button
+              viewButtons[x].addEventListener("click", anchorClicked);
+            }
+          }
 
-                // Variable created for book info
-                let books = xml.getElementsByTagName("book");
+         // Event listener registered for DOM content
+         addEventListener("DOMContentLoaded", (event) => {
 
-                // Variable created for table heading
-                tableData += `
-                    <table class="table" id="bookTable">
-                        <tr>
-                            <th>ISBN</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Pages</th>
-                            <th>Authors</th>
-                        </tr>
-                    </tbody>
-                `;
+          // Variable declared for books.xml
+          let fileName = "books.xml";
 
-            // To iterate over the books variable and append each XML object to bookTable variable
-            for (let book of books) {
-    
-                let isbn = book.getElementsByTagName("isbn")[0].childNodes[0].nodeValue;
-                let title = book.getElementsByTagName("title")[0].childNodes[0].nodeValue;
-                let description = book.getElementsByTagName("description")[0].childNodes[0].nodeValue;
-                let pages = book.getElementsByTagName("pages")[0].childNodes[0].nodeValue;
-                let author = book.getElementsByTagName("authors")[0].childNodes[0].nodeValue;
+          // Fetch to pass-in fileName variable
+          fetch(fileName)
+          .then(res => res.text())
+          .then(data => {
+              // domParser variable created
+              let domParser = new DOMParser();
 
-                // Data/info values to table
-                tableData += `
-                  <tr>
+              // xmlBooks variable created to parse info from xml books
+              let xmlBooks = domParser.parseFromString(data, "text/xml");
+              loadBooks(xmlBooks);
+
+              // Click event for isbn
+              addIsbnClickEvents();
+          })
+         });
+
+         // Function created for loading book info into table
+         function loadBooks(xml){
+
+          // Variable created for book info
+          let books = xml.getElementsByTagName("book");
+
+          // Variable created for table heading
+          let tableData = 
+                `<table class="table" id="bookTable">
+                    <tr>
+                      <th>ISBN</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Pages</th>
+                      <th>Authors</th>
+                    </tr>
+                    <tbody>`;
+
+          // To iterate over the books variable and append each XML object to bookTable variable
+          for (let book of books){
+              
+              let isbn = book.getElementsByTagName("isbn")[0].childNodes[0].nodeValue;
+              let title = book.getElementsByTagName("title")[0].childNodes[0].nodeValue;
+              let description = book.getElementsByTagName("description")[0].childNodes[0].nodeValue;
+              let pages = book.getElementsByTagName("pages")[0].childNodes[0].nodeValue;
+              let author = book.getElementsByTagName("authors")[0].childNodes[0].nodeValue;
+
+              // Data/info values to table
+              tableData += 
+                  `<tr>
                     <td data-value="ISBN: "><a href="#" class="isbn-link">${isbn}</a></td>
                     <td data-value="Title: ">${title}</td>
                     <td data-value="Description: ">${description}</td>
                     <td data-value="Pages: ">${pages}</td>
                     <td data-value="Authors: ">${author}</td>
-                  </tr>
-                `;
-            }
+                  </tr>`;
+          }
 
-            // Closes table body and the entire table
-            tableData += `
-                </tbody>
-              </table>
-            `;
+          // Closes table body and the entire table
+          tableData += 
+                    `</tbody>
+                </table>`;
 
-            // Display the table to the HTML document
-            document.getElementById("bookList").innerHTML = tableData;   
-            }
-
-        // Function declared for book info
-        function anchorClicked(e) {
-            // Prevents default
-            e.preventDefault();
-
-            let self = this;
-            let cell = self.parentElement;
-            let row = cell.parentElement;
-            let data = row.querySelectorAll("td");
-
-            let bookData = `<ul style="list-style-type: none">`;
-
-            // Each field of data info
-            for (let field of data) {
-                // List to table string
-                bookData += `<li><b>${field.dataset.value}</b>${field.innerText}</li>`;
-            }
-
-            bookData += `</ul>`;
-
-            // Displays info to user
-            document.getElementById("selectedBook").innerHTML = bookData;
+          // Display the table to the HTML document
+          document.getElementById("bookList").innerHTML = tableData;
         }
 
-        // Function declared for isbn click events
-        function addIsbnClickEvents() {
-
-            // Variable declared for table body
-            let viewButtons = document.querySelectorAll("#bookTable tbody .isbn-link");
-
-            // Items in viewButtons:
-            for (let x = 0; x < viewButtons.length; x++) {
-            // Onclick created for isbn button
-            viewButtons[x].addEventListener("click", anchorClicked);
-            }
-        }
     </script>
     </div>
   </div>
 
     <script>
-      setDefaultTheme(); // To set default theme to light if one is not set in the browsers localStorage
-      /**
-      * Function to switch the users selected website theme	
-      * @param x (this instance)
-      */
-      function toggleMode(x) { 
-          let colorTheme = document.body.classList; // To get the body's css class
-          let iconMode = x.classList; // To get the current classes assigned to the triggered button
+        setDefaultTheme(); // To set default theme to light if one is not set in the browsers localStorage
+        /**
+        * Function to switch the users selected website theme	
+        * @param x (this instance)
+        */
+        function toggleMode(x) { 
+            let colorTheme = document.body.classList; // To get the body's css class
+            let iconMode = x.classList; // To get the current classes assigned to the triggered button
 
-          /**
-          * If current body class is set to light-theme, update to preference dark-theme in browsers local storage 
-          */
-          if (colorTheme.value === "light-theme") { 
-              localStorage.clear(); // Clears local storage
-              localStorage.setItem("mode", "dark-theme"); // Sets to dark theme
-              localStorage.setItem("iconMode", "fa-toggle-on"); // Toggles icon mode
-              localStorage.setItem("iconText", "Dark Mode"); //Toggles page to dark mode
-          } else {
-          /**
-          * If current body class is set to dark-theme, update the user's preference to the light-theme in browsers local storage
-          */
-              localStorage.clear(); // Begins by clearing local storage
-              localStorage.setItem("mode", "light-theme"); // Sets to light-theme
-              localStorage.setItem("iconMode", "fa-toggle-off"); // Toggles icon mode to light
-              localStorage.setItem("iconText", "Light Mode"); // Toggles page to light mode
-          }
+            /**
+            * If current body class is set to light-theme, update to preference dark-theme in browsers local storage 
+            */
+            if (colorTheme.value === "light-theme") { 
+                localStorage.clear(); // Clears local storage
+                localStorage.setItem("mode", "dark-theme"); // Sets to dark theme
+                localStorage.setItem("iconMode", "fa-toggle-on"); // Toggles icon mode
+                localStorage.setItem("iconText", "Dark Mode"); //Toggles page to dark mode
+            } else {
+            /**
+            * If current body class is set to dark-theme, update the user's preference to the light-theme in browsers local storage
+            */
+                localStorage.clear(); // Begins by clearing local storage
+                localStorage.setItem("mode", "light-theme"); // Sets to light-theme
+                localStorage.setItem("iconMode", "fa-toggle-off"); // Toggles icon mode to light
+                localStorage.setItem("iconText", "Light Mode"); // Toggles page to light mode
+            }
 
-          /**
-          * Apply the updated selection to the HTML page elements
-          */
-          colorTheme.value = localStorage.getItem("mode"); // Applies new mode to html page
-          iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`; 
-          document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText"); // Stores in local storage
-      }
-    </script> 
+            /**
+            * Apply the updated selection to the HTML page elements
+            */
+            colorTheme.value = localStorage.getItem("mode"); // Applies new mode to html page
+            iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`; 
+            document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText"); // Stores in local storage
+        }
+    </script>
+
   </body>
 </html>
