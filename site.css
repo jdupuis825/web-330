@@ -26,14 +26,14 @@ Styling for return home hover
 */
 .return-home:hover {
     background-color: #D6A800;
-    color: #4F3674
+    color: #4F3674;
 }
 
 /** 
 Styling for return home visited
 */
 .return-home:visited {
-    color: #3C275A
+    color: #3C275A;
 }
 
 /** 
@@ -70,4 +70,22 @@ Styling for full width
 .assign-results-text {
     text-align: center;
     font-size: 28px;
+}
+
+#container{
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+#icon-mode:hover{
+    cursor: pointer;
+}
+
+#icon-text{
+    padding-left: 10px;
+}
+
+.pull-right{
+    float: right;
 }
