@@ -14,8 +14,9 @@ Imports theme.css for light and dark theme
 Styling for card
 */
 .card {
-    width: 100%;
+    margin: auto;
     text-align: center;
+    width: 100%;
 }
     
 /*
