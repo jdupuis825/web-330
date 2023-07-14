@@ -15,12 +15,6 @@ Styling for card
 */
 .card {
     width: 100%;
-}
-
-/*
-Styling for card title
-*/
-.card-title {
     text-align: center;
 }
     
