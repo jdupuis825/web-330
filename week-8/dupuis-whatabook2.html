@@ -1,0 +1,263 @@
+<!--
+    Title: dupuis-whatabook1.html
+    Author: Jocelyn Dupuis
+    Date: 07/14/2023
+    Description: Interface for WhatABook App
+-->
+
+
+<!--To set the document type and language-->
+<!DOCTYPE html>
+<html lang="en">
+
+  <!--Gives page a title, links stylesheets and Google font kit to page-->
+  <head>
+    <!--Links: title, stylesheets, JavaScript, and Google Fonts-->
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link href="../site.css" type="text/css"  rel="stylesheet">
+    <link href="../theme.css" type="text/css"  rel="stylesheet">
+    <link href="dupuis-whatabook2.css" type="text/css"  rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="../theme.js"></script>
+  </head>
+
+  <body>
+  <div class="light-theme">
+    <!--Display light and dark theme-->
+    <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right"
+        style="font-size: 28px;"><span id="icon-text"></span></i>&nbsp;
+    <!--Container holds first card and app-header-->
+    <div class="assign-container">
+      <h1 class="app-header">Welcome to the WhatABook, Part 2 App!</h1>
+      <div class="assign-content">
+        <!--Card with title-->
+        <div class="card">
+          <div class="card-title">Book Listing</div>
+          <div class="card-content" id="bookList"></div>
+        </div>
+         <!--Link returns users to landing page-->
+         <a href="../index.html">Return</a>
+      </div>
+    </div>
+
+    <!--Second cards container-->
+    <div class="assign-container">
+      <div class="assign-content">
+        <!--Card and results header-->
+        <div class="card">
+          <div class="card-title">Selected Book</div>
+            <div class="card-content" id="selectedBook"></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      // Imports HttpClient class
+      import { HttpClient } from "./http-client.js";
+
+      // Function declared to add isbn click events
+      function addIsbnClickEvents() {
+        // Variable declared for table body
+        let viewButtons = document.querySelectorAll("#bookList tbody .isbn-link");
+
+        // ViewButtons
+        for (let x = 0; x < viewButtons.length; x++) {
+            // Onclick event listener created for buttons
+            viewButtons[x].addEventListener("click", getBook);
+          }
+      }
+
+      // Instantiate new HttpClient object 
+      // Assign to http variable
+      const http = new HttpClient();
+
+      // Variable created and array declared for isbn numbers
+      const isbns = [
+        '0345339681',
+        '0261103571',
+        '9780593099322',
+        '9780261102361',
+        '9780261102378',
+        '9780590302715',
+        '9780316769532',
+        '9780743273565',
+        '9780590405959'
+      ];
+
+      // Object literal created
+      const params = {
+        "bibkeys": `ISBN:${isbns.join(",")}`,
+        "format": "json",
+        "jscmd": "details"
+      };
+
+      // Call http.get function
+      http.get("https://openlibrary.org/api/books", params).then(res => {
+        // Res object
+        console.log(res);
+
+        // HTML of book list for table html string
+        document.getElementById("bookList").innerHTML = buildHtmlString(res, "table");
+
+        // Function for isbn click events
+        addIsbnClickEvents();
+      })
+
+      // Catch statement 
+      .catch(e => {
+        // Error message displayed 
+        console.log(e);
+      });
+
+      // Function created that accepts an even object
+      function getBook(e) {
+        // Prevents default
+        e.preventDefault();
+
+        // Variable created for this object
+        const self = this;
+
+        // Variable created and assigned to innerText
+        const isbn = self.innerText;
+
+        // Object literal created for params
+        const params = {
+          "bibkeys": `ISBN:${isbn}`,
+          "format": "json",
+          "jscmd": "details"
+        };
+
+        // Call http.get function supplying it the open library URL and params object literal
+        http.get("https://openlibrary.org/api/books", params).then(res => {
+          // Call buildHtmlString function supplying the res and ul string value
+          // Bind results to selectedBook 
+          document.getElementById("selectedBook").innerHTML = buildHtmlString(res, "ul");
+        })
+        // Catch statement
+        .catch(e => {
+          // Error message displayed
+          console.log(e);
+        })
+      }
+
+      // Function created with two params
+      function buildHtmlString(res, format) {
+        // Variable created for table string
+        let tableHeader = 
+                          `<table>
+                            <tr>
+                              <th>ISBN</th>
+                              <th>Title</th>
+                              <th>Description</th>
+                              <th>Pages</th>
+                              <th>Authors</th>
+                            </tr>`;
+        // Variable created for ul string, set to empty
+        let ulString = "";
+
+        // For..in statement key in res
+          for (let key in res) {
+            // ul HTML string to ulString
+            ulString += `<ul style="list-style-type: none;">`;
+
+            // If res has own property
+            if (res.hasOwnProperty(key)) {
+              // Empty authors array
+                let authors = [];
+
+                // If res[key].details are valid
+                if (res[key].details.authors) {
+                  
+                  // Authors array
+                  authors = res[key].details.authors.map(function(author) {
+                    return author.name;
+                  })
+                }
+                        
+                // Book object declared with table info for books
+                let book = {
+                    isbn: res[key].details.isbn_13 ? res[key].details.isbn_13 : res[key].details.isbn_10,
+                    title: res[key].details.title,
+                    description: res[key].details.subtitle ? res[key].details.subtitle : "N/A",
+                    pages: res[key].details.number_of_pages ? res[key].details.number_of_pages : "N/A",
+                    authors: authors.join(",")
+                }
+    
+                // Declared for table rows
+                ulString += 
+                    `<li><b>ISBN: </b> ${book.isbn}</li>
+                    <li><b>Title:</b> ${book.title}</li>
+                    <li><b>Description: </b> ${book.description}</li>
+                    <li><b>Pages: </b> ${book.pages}</li>
+                    <li><b>Authors: </b> ${book.authors}</li>
+                  </ul>`;
+
+                // Declared for table header
+                tableHeader += 
+                  `<tr>
+                    <td><a href="#" class="isbn-link">${book.isbn}</a></td>
+                    <td>${book.title}</td>
+                    <td>${book.description}</td>
+                    <td>${book.pages}</td>
+                    <td>${book.authors}</td>
+                  </tr>`;
+            }
+          }
+
+          // Table closed
+          tableHeader += `</table>`;
+
+          // Statement for if format variable is a table
+          if (format == "table") {
+                // Return tableHeader
+                return tableString;
+          } else {
+                // Else return ulString
+                return ulString;
+          }
+      }
+    </script>
+
+    <script>
+      setDefaultTheme(); // To set default theme to light if one is not set in the browsers localStorage
+      /**
+      * Function to switch the users selected website theme	
+      * @param x (this instance)
+      */
+      function toggleMode(x) { 
+          let colorTheme = document.body.classList; // To get the body's css class
+          let iconMode = x.classList; // To get the current classes assigned to the triggered button
+
+          /**
+          * If current body class is set to light-theme, update to preference dark-theme in browsers local storage 
+          */
+          if (colorTheme.value === "light-theme") { 
+              localStorage.clear(); // Clears local storage
+              localStorage.setItem("mode", "dark-theme"); // Sets to dark theme
+              localStorage.setItem("iconMode", "fa-toggle-on"); // Toggles icon mode
+              localStorage.setItem("iconText", "Dark Mode"); //Toggles page to dark mode
+          } else {
+          /**
+          * If current body class is set to dark-theme, update the user's preference to the light-theme in browsers local storage
+          */
+              localStorage.clear(); // Begins by clearing local storage
+              localStorage.setItem("mode", "light-theme"); // Sets to light-theme
+              localStorage.setItem("iconMode", "fa-toggle-off"); // Toggles icon mode to light
+              localStorage.setItem("iconText", "Light Mode"); // Toggles page to light mode
+          }
+
+          /**
+          * Apply the updated selection to the HTML page elements
+          */
+          colorTheme.value = localStorage.getItem("mode"); // Applies new mode to html page
+          iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`; 
+          document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText"); // Stores in local storage
+      }
+    </script> 
+
+  </body>
+</html>

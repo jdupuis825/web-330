@@ -1,0 +1,29 @@
+/**
+    Title: dupuis-whatabook1.css
+    Author: Jocelyn Dupuis
+    Date: 07/14/2023
+    Description: Styling for WhatABook App
+*/
+
+/*
+Imports theme.css for light and dark theme 
+*/
+@import url("../theme.css");
+
+/*
+Styling for card
+*/
+.card {
+    margin: auto;
+    text-align: center;
+    width: 100%;
+}
+
+/*
+Styling for H1
+*/
+h1 {
+    border: none;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
