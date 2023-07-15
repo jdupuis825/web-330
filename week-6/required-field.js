@@ -16,14 +16,17 @@ export class RequiredField {
     }
     // Validate function declared
     validate() {
-      if(parseFloat(this.field)) {
-        // Return false
+      // Object a string
+      if(typeof this.field === 'string') {
+        // Returns true
+        return true;
+      } else {
+        // Returns false
         return false;
       }
-      // Return true
-      return true;
     }
-  
+    
+    //Function declared to get message
     getMessage() {
       return this.name + " is a required field.";
     }

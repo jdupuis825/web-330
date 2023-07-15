@@ -16,7 +16,13 @@ export class FloatField {
     }
     // Validation function declared 
     validate() {
-      return isNaN(parseFloat(this.field));
+      if(!isNaN(this.field)) {
+        // Returns true
+        return true;
+      } else {
+        // Returns false
+        return false;
+      }
     }
     // Function declared to produce message 
     getMessage() {

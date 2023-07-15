@@ -17,11 +17,18 @@ export class FloatMaxField {
     }
     // Validate function declared
     validate() {
-      return parseFloat(this.field) > parseFloat(this.max);
+      // Object less than max
+      if (parseFloat(this.field) < this.max) {
+        // Returns true
+        return true;
+      } else {
+        // Returns false
+        return false;
+      }
     }
 
     // Function declared to get message
     getMessage() {
-      return this.name + " must be less than " + this.min + ". You entered " + this.field;
+      return this.name + " must be less than " + this.max + ". You entered " + this.field;
     }
   }

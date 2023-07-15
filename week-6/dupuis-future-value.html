@@ -12,44 +12,43 @@
 
   <!--Gives page a title, links stylesheets and Google font kit to page-->
   <head>
-    <!--Links: title, stylesheets, JavaScript, and Google Fonts-->
-    <title>WEB 330 – Enterprise JavaScript II</title>
-    <link href="../theme.css" type="text/css"  rel="stylesheet">
+    <!--Links: Css, title, JavaScript, and Google Fonts-->
     <link href="../site.css" type="text/css"  rel="stylesheet">
+    <link href="../theme.css" type="text/css"  rel="stylesheet">
     <link href="dupuis-future-value.css" type="text/css"  rel="stylesheet">
     <link href="../flex-layout.css" type="text/css"  rel="stylesheet">
+    <title>WEB 330 – Enterprise JavaScript II</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet"> 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
     <script src="../theme.js"></script>
   </head>
-  <body class="light-theme">
 
+  <body>
+    <div class="light-theme">
     <!--Display light and dark theme-->
     <i onclick="toggleMode(this)" id="icon-mode" class="fa fa-toggle-off pull-right"
-        style="font-size: 28px;"><span id="icon-text"></span></i><br>
+        style="font-size: 28px;"><span id="icon-text"></span></i>&nbsp;
     <!--Container holds first card and app-header-->
-    
-    <!--<div class="assign-container">-->
     <div class="assign-content">
       <h1 class="app-header">Welcome to the Future Value App!</h1>
+        <div class="assign-content">
         <!--Card with title-->
         <div class="card">
           <div class="card-title">Future Value Calculator</div>
-          <!--To display error logs-->
           <div class="danger" id="errorLog"></div>
-
+        
           <div class="card-content">
             <!--Form for selecting items-->
             <div class="form">
-                <!--Text field for auto repair items-->
+                <!--Text field for monthly payment-->
                 <div class="form-field row">
                   <label for="txtMonthlyPayment" class="col-5 form-label">Monthly Payment:</label>
                   <input type="text" id="txtMonthlyPayment" class="input col-7">
                 </div>
 
+                <!--Text field for interest rate-->
                 <div class="form-field row">
                     <label for="txtYearlyRate" class="col-5 form-label">Interest Rate:</label>
                     <input type="text" id="txtYearlyRate" class="input col-7">
@@ -61,7 +60,7 @@
 
                 <div class="form-field row">
                     <label for="listNumOfYears" class="col-5 form-label">Number of Years:</label>
-                        <select id="listNumOfYears" name="listNumOfYears" class="drop-down-menu col-3">
+                        <select id="listNumOfYears" class="drop-down-menu col-3">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -73,8 +72,8 @@
                             <option value="9">9</option>
                             <option value="10">10</option>
                         </select>
-                    </div>
                 </div>
+            
                 <!--Button to see shopping cart items-->
                 <div class="form-field">
                   <button class="btn btn-primary" id="btnCalculate">Calculate</button>
@@ -82,13 +81,16 @@
             </div>
           </div>
         </div>
+      
           
         <!--Link returns users to landing page-->
         <a href="../index.html">Return</a>
+      </div>
+    </div>
 
       <!--Second cards container-->
     <div class="assign-container">
-    <div class="assign-content">
+      <div class="assign-content">
       <!--Results header-->
       <div class="card">
         <div class="card-title">Calculation as of <span id="today"></span></div>
@@ -97,50 +99,49 @@
             <div class="assign-results-text" id="futureValue"></div>
           </div>
       </div>
-    </div>
-    </div>
+     
 
     <script type="module">
 
         // Imports finance calculations and validator 
-        import { FinanceCalculator } from './finance-calculator.js';
-        import { Validator } from './validator.js';
+        import { FinanceCalculator } from "./finance-calculator.js";
+        import { Validator } from "./validator.js";
 
-         // Sets the current date 
-         document.getElementById("today").innerHTML = new Date().toLocaleDateString("en-US");
+        // Sets the current date 
+        document.getElementById("today").innerHTML = new Date().toLocaleDateString("en-US");
 
         // Onclick function declared to calculate future values 
         document.getElementById("btnCalculate").onclick = function() {
 
-        // Variable declared for monthly payment 
-        const monthlyPayment = document.getElementById("txtMonthlyPayment").value;
+          // Variable declared for monthly payment 
+          let monthlyPayment = document.getElementById("txtMonthlyPayment").value;
 
-        // Variable declared for yearly rate 
-        const rate = document.getElementById("txtYearlyRate").value;
+          // Variable declared for yearly rate 
+          let rate = document.getElementById("txtYearlyRate").value;
         
-        // Variable declared for number of years 
-        const years = document.getElementById("listNumOfYears").value;
+          // Variable declared for number of years 
+          let years = document.getElementById("listNumOfYears").value;
         
-        // Variable declared for error log 
-        const errorLogEl = document.getElementById("errorLog");
+          // Variable declared for error log 
+          let errorLogEl = document.getElementById("errorLog");
 
-        // Variable declared for monthly payment validator 
-        const monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment);
+          // Variable declared for monthly payment validator 
+          let monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment);
 
-        // Monthly payment validator 
-        monthlyPaymentValidator.addRequiredField();
-        monthlyPaymentValidator.addRequiredFloatField();
-        monthlyPaymentValidator.addFloatMinField(100);
+          // Monthly payment validator 
+          monthlyPaymentValidator.addRequiredField();
+          monthlyPaymentValidator.addRequiredFloatField();
+          monthlyPaymentValidator.addFloatMinField(100);
 
-        // Rate validator declared
-        const rateValidator = new Validator("Interest Rate", rate);
-        // Required fields added
-        rateValidator.addRequiredField();
-        rateValidator.addRequiredFloatField();
-        rateValidator.addFloatMaxField(100);
+          // Rate validator declared
+          let rateValidator = new Validator("Interest Rate", rate);
+          // Required fields added
+          rateValidator.addRequiredField();
+          rateValidator.addRequiredFloatField();
+          rateValidator.addFloatMaxField(100);
 
         // Creates error log
-        const errorLog = [];
+        let errorLog = [];
 
         // Monthly payment validator does NOT validate
         if (!monthlyPaymentValidator.validate()) {
@@ -166,11 +167,11 @@
             errorLogEl.innerHTML = "";
 
             // Calculates future value
-            const futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
+            let futureValue = FinanceCalculator.calculateFutureValue(monthlyPayment, rate, years);
 
             // Formats results with commas
-            const obj1 = new Intl.NumberFormat('en-US');
-            const output = obj1.format(futureValue);
+            let obj1 = new Intl.NumberFormat('en-US');
+            let output = obj1.format(futureValue);
 
             // Displays future value
             document.getElementById("futureValue").innerHTML = "The future value is $" + output;
@@ -193,8 +194,46 @@
             }
         }
     
-
     </script>
+   </div>
+  </div>
+
+  <script>
+    setDefaultTheme(); // To set default theme to light if one is not set in the browsers localStorage
+    /**
+    * Function to switch the users selected website theme	
+    * @param x (this instance)
+    */
+    function toggleMode(x) { 
+        let colorTheme = document.body.classList; // To get the body's css class
+        let iconMode = x.classList; // To get the current classes assigned to the triggered button
+
+        /**
+        * If current body class is set to light-theme, update to preference dark-theme in browsers local storage 
+        */
+        if (colorTheme.value === "light-theme") { 
+            localStorage.clear(); // Clears local storage
+            localStorage.setItem("mode", "dark-theme"); // Sets to dark theme
+            localStorage.setItem("iconMode", "fa-toggle-on"); // Toggles icon mode
+            localStorage.setItem("iconText", "Dark Mode"); //Toggles page to dark mode
+        } else {
+        /**
+        * If current body class is set to dark-theme, update the user's preference to the light-theme in browsers local storage
+        */
+            localStorage.clear(); // Begins by clearing local storage
+            localStorage.setItem("mode", "light-theme"); // Sets to light-theme
+            localStorage.setItem("iconMode", "fa-toggle-off"); // Toggles icon mode to light
+            localStorage.setItem("iconText", "Light Mode"); // Toggles page to light mode
+        }
+
+        /**
+        * Apply the updated selection to the HTML page elements
+        */
+        colorTheme.value = localStorage.getItem("mode"); // Applies new mode to html page
+        iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`; 
+        document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText"); // Stores in local storage
+    }
+  </script> 
 
   </body>
 </html>

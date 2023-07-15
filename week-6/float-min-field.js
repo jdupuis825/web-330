@@ -17,7 +17,14 @@ export class FloatMinField {
     }
     // Validate function declared
     validate() {
-      return parseFloat(this.field) < parseFloat(this.min);
+      // Object greater than min
+      if (parseFloat(this.field) > this.min) {
+        // Returns true
+        return true;
+      } else {
+        // Returns false
+        return false;
+      }
     }
 
     // Function declared to get message
