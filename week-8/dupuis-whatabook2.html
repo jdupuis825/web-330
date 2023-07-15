@@ -193,7 +193,7 @@
                                      </ul>`;
 
                     // Declared for table 
-                    tableString += 
+                    tableHeader += 
                                     `<tr>
                                       <td><a href="#" class="isbn-link">${book.isbn}</a></td>
                                       <td>${book.title}</td>
@@ -205,12 +205,12 @@
               }
 
               // Table closed
-              tableString += `</table>`;
+              tableHeader += `</table>`;
 
               // Statement for if format variable is a table
               if (format == "table") {
                     // Return table
-                    return tableString;
+                    return tableHeader;
               } else {
                     // Else return ulString
                     return ulString;
