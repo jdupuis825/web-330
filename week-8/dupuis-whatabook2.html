@@ -144,14 +144,15 @@
           function buildHtmlString(res, format) {
             // Variable created for table string
             let tableString = 
-                                `<table>
+                                `<table class="table">
                                   <tr>
                                     <th>ISBN</th>
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Pages</th>
                                     <th>Authors</th>
-                                  </tr>`;
+                                  </tr>
+                                  </tbody>`;
             // Variable created for ul string, set to empty                      
             let ulString = "";
 
@@ -185,22 +186,22 @@
         
                     // Declared for table rows
                     ulString += 
-                                    `<li><b>ISBN: </b> ${book.isbn}</li>
-                                     <li><b>Title:</b> ${book.title}</li>
-                                     <li><b>Description: </b> ${book.description}</li>
-                                     <li><b>Pages: </b> ${book.pages}</li>
-                                     <li><b>Authors: </b> ${book.authors}</li>
-                                     </ul>`;
+                                `<li><b>ISBN: </b> ${book.isbn}</li>
+                                    <li><b>Title:</b> ${book.title}</li>
+                                    <li><b>Description: </b> ${book.description}</li>
+                                    <li><b>Pages: </b> ${book.pages}</li>
+                                    <li><b>Authors: </b> ${book.authors}</li>
+                                    </ul>`;
 
                     // Declared for table 
                     tableString += 
-                                    `<tr>
-                                      <td><a href="#" class="isbn-link">${book.isbn}</a></td>
-                                      <td>${book.title}</td>
-                                      <td>${book.description}</td>
-                                      <td>${book.pages}</td>
-                                      <td>${book.authors}</td>
-                                    </tr>`;
+                                `<tr>
+                                    <td><a href="#" class="isbn-link">${book.isbn}</a></td>
+                                    <td>${book.title}</td>
+                                    <td>${book.description}</td>
+                                    <td>${book.pages}</td>
+                                    <td>${book.authors}</td>
+                                </tr>`;
                 }
               }
 
