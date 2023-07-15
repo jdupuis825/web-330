@@ -44,7 +44,7 @@
       <div class="assign-content">
         <!--Card and results header-->
         <div class="card">
-          <div class="card-title ">Selected Book</div>
+          <div class="card-title">Selected Book</div>
             <!--Display information on a book chosen by the user-->
             <div class="card-content" id="selectedBook">
             </div>
@@ -143,7 +143,7 @@
           // Function created with two params
           function buildHtmlString(res, format) {
             // Variable created for table string
-            let tableHeader = 
+            let tableString = 
                                 `<table>
                                   <tr>
                                     <th>ISBN</th>
@@ -193,7 +193,7 @@
                                      </ul>`;
 
                     // Declared for table 
-                    tableHeader += 
+                    tableString += 
                                     `<tr>
                                       <td><a href="#" class="isbn-link">${book.isbn}</a></td>
                                       <td>${book.title}</td>
@@ -205,12 +205,12 @@
               }
 
               // Table closed
-              tableHeader += `</table>`;
+              tableString += `</table>`;
 
               // Statement for if format variable is a table
               if (format == "table") {
                     // Return table
-                    return tableHeader;
+                    return tableString;
               } else {
                     // Else return ulString
                     return ulString;
